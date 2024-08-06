@@ -1,7 +1,6 @@
 import {
   apply,
   chain,
-  externalSchematic,
   mergeWith,
   move,
   Rule,
@@ -17,7 +16,6 @@ interface SchemaOptions {
 export function template1(_options: SchemaOptions): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     const rule = chain([
-      runNgNewSchematic(_options),
       createDefaultFolders(_options),
       createSassFolder(_options),
     ]);
@@ -25,17 +23,17 @@ export function template1(_options: SchemaOptions): Rule {
   };
 }
 
-function runNgNewSchematic({ name }: SchemaOptions) {
-  return externalSchematic('@schematics/angular', 'ng-new', {
-    name,
-    version: '13.3.2',
-    directory: name,
-    routing: false,
-    style: 'scss',
-    inlineStyle: false,
-    inlineTemplate: false,
-  });
-}
+// function runNgNewSchematic({ name }: SchemaOptions) {
+//   return externalSchematic('@schematics/angular', 'ng-new', {
+//     name,
+//     version: '13.3.2',
+//     directory: name,
+//     routing: false,
+//     style: 'scss',
+//     inlineStyle: false,
+//     inlineTemplate: false,
+//   });
+// }
 
 function createDefaultFolders({ name }: SchemaOptions) {
   return (tree: Tree, _context: SchematicContext) => {
@@ -53,6 +51,15 @@ function createSassFolder({ name }: SchemaOptions) {
   return (_: Tree, _context: SchematicContext) => {
     const transformedSource = apply(url('./files/sass'), [
       move(`${name}/src/sass`),
+    ]);
+    return mergeWith(transformedSource);
+  };
+}
+
+function createComponenetsFolder({ name }: SchemaOptions) {
+  return (_: Tree, _context: SchematicContext) => {
+    const transformedSource = apply(url('./files/components'), [
+      move(`${name}/src/app/components`),
     ]);
     return mergeWith(transformedSource);
   };

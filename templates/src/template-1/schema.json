@@ -9,7 +9,7 @@
     "name": {
       "type": "string",
       "description": "The name of the project",
-      "x-prompt": "What is the name of the project?:",
+      "x-prompt": "Qual o tema do template selecionado?",
       "$default": {
         "$source": "argv",
         "index": 0

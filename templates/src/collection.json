@@ -1,6 +1,5 @@
 {
   "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
-  "extends": ["@schematics/angular"],
   "schematics": {
     "template-1": {
       "description": "A blank schematic.",
