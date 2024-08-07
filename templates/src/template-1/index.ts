@@ -1,24 +1,16 @@
 import {
-  apply,
   chain,
-  mergeWith,
-  move,
   Rule,
   SchematicContext,
   Tree,
-  url,
 } from '@angular-devkit/schematics';
-
-interface SchemaOptions {
-  name: string;
-}
+import { generateAllTemplateRules } from '../utils/template-helper';
 
 export function template1(_options: SchemaOptions): Rule {
   return (tree: Tree, _context: SchematicContext) => {
-    const rule = chain([
-      createDefaultFolders(_options),
-      createSassFolder(_options),
-    ]);
+    console.log(_options);
+
+    const rule = chain(generateAllTemplateRules());
     return rule(tree, _context);
   };
 }
@@ -35,32 +27,14 @@ export function template1(_options: SchemaOptions): Rule {
 //   });
 // }
 
-function createDefaultFolders({ name }: SchemaOptions) {
-  return (tree: Tree, _context: SchematicContext) => {
-    tree.create(`${name}/src/app/components/.gitkeep`, '');
-    tree.create(`${name}/src/app/directives/.gitkeep`, '');
-    tree.create(`${name}/src/app/mocks/.gitkeep`, '');
-    tree.create(`${name}/src/app/models/.gitkeep`, '');
-    tree.create(`${name}/src/app/pages/.gitkeep`, '');
-    tree.create(`${name}/src/app/pipes/.gitkeep`, '');
-    tree.create(`${name}/src/app/services/.gitkeep`, '');
-  };
-}
-
-function createSassFolder({ name }: SchemaOptions) {
-  return (_: Tree, _context: SchematicContext) => {
-    const transformedSource = apply(url('./files/sass'), [
-      move(`${name}/src/sass`),
-    ]);
-    return mergeWith(transformedSource);
-  };
-}
-
-function createComponenetsFolder({ name }: SchemaOptions) {
-  return (_: Tree, _context: SchematicContext) => {
-    const transformedSource = apply(url('./files/components'), [
-      move(`${name}/src/app/components`),
-    ]);
-    return mergeWith(transformedSource);
-  };
-}
+// function createDefaultFolders({ name }: SchemaOptions) {
+//   return (tree: Tree, _context: SchematicContext) => {
+//     tree.create(`${name}/src/app/components/.gitkeep`, '');
+//     tree.create(`${name}/src/app/directives/.gitkeep`, '');
+//     tree.create(`${name}/src/app/mocks/.gitkeep`, '');
+//     tree.create(`${name}/src/app/models/.gitkeep`, '');
+//     tree.create(`${name}/src/app/pages/.gitkeep`, '');
+//     tree.create(`${name}/src/app/pipes/.gitkeep`, '');
+//     tree.create(`${name}/src/app/services/.gitkeep`, '');
+//   };
+// }

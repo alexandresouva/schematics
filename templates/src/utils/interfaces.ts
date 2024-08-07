@@ -1,0 +1,3 @@
+interface SchemaOptions {
+  name: string;
+}
