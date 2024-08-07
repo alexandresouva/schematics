@@ -4,13 +4,19 @@ import {
   SchematicContext,
   Tree,
 } from '@angular-devkit/schematics';
-import { generateAllTemplateRules } from '../utils/template-helper';
+import {
+  addImportsAndDeclarationsToModule,
+  generateAllTemplateRules,
+} from '../utils/template-helper';
 
 export function template1(_options: SchemaOptions): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     console.log(_options);
 
-    const rule = chain(generateAllTemplateRules());
+    const rule = chain([
+      ...generateAllTemplateRules(),
+      addImportsAndDeclarationsToModule(),
+    ]);
     return rule(tree, _context);
   };
 }
