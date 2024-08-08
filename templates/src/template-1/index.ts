@@ -5,17 +5,17 @@ import {
   Tree,
 } from '@angular-devkit/schematics';
 import {
-  addImportsAndDeclarationsToModule,
+  addImportsAndDeclarationsToAppModule,
   generateAllTemplateRules,
 } from '../utils/template-helper';
+import path = require('path');
 
 export function template1(_options: SchemaOptions): Rule {
+  const appModulePath = path.join(__dirname, './files/app.module.ts');
   return (tree: Tree, _context: SchematicContext) => {
-    console.log(_options);
-
     const rule = chain([
       ...generateAllTemplateRules(),
-      addImportsAndDeclarationsToModule(),
+      addImportsAndDeclarationsToAppModule(appModulePath),
     ]);
     return rule(tree, _context);
   };
